@@ -27,6 +27,12 @@
         display: flex;
         line-height: 44px;
         height: 44px;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        z-index: 12;
+        background-color:white;
     }
     .left,.right {
         width: 60px;
