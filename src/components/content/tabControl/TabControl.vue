@@ -29,6 +29,7 @@
         methods:{
             CheckTab(index){
                 this.currentIndex = index;
+                this.$emit("tabCheck",index);
 
             }
         }
@@ -41,6 +42,7 @@
         height: 30px;
         text-align: center;
         display: flex;
+        background-color: white;
     }
     .tabcontrol-item{
         flex: 1;
