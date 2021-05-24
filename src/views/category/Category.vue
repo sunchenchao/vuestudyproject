@@ -114,6 +114,17 @@
             console.log(document.querySelector(".wrapper"));
 
             this.scroll =  new Bscroll(document.querySelector(".wrapper"),{
+                //3所有的滚动都可以监听 2惯性的滚动不可以监听
+                probeType:3,
+                pullUpLoad:true
+            })
+            //监听滚动时间
+            this.scroll.on("scroll",(postion)=>{
+                console.log(postion);
+
+            });
+            this.scroll.on("pullingUp",()=>{
+                console.log("上拉加载更多");
             })
         },
         data(){
@@ -133,6 +144,7 @@
     .wrapper{
         height: 100px;
         background-color: red;
+        overflow: hidden;
     }
 
 </style>

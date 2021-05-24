@@ -3,11 +3,17 @@
         <NavBar>
             <div slot="center">首页</div>
         </NavBar>
-        <HomeSwiper :banner="banner"></HomeSwiper>
-        <recommend-view :recommends="recommends"></recommend-view>
-        <feature-view></feature-view>
-        <tab-control class="tabcontrol" :titles="['推荐','喜欢','热门']" @tabCheck="tabCheck"></tab-control>
-        <good-list :goodList="getCurrentyTpye"></good-list>
+        <scroll class="content">
+            <HomeSwiper :banner="banner"></HomeSwiper>
+            <recommend-view :recommends="recommends"></recommend-view>
+            <feature-view></feature-view>
+            <tab-control class="tabcontrol" :titles="['推荐','喜欢','热门']" @tabCheck="tabCheck"></tab-control>
+            <good-list :goodList="getCurrentyTpye"></good-list>
+        </scroll>
+
+
+
+
     </div>
 </template>
 
@@ -15,6 +21,7 @@
     import NavBar from "@/components/common/navbar/NavBar";
     import TabControl from "@/components/content/tabControl/TabControl";
     import GoodList from "@/components/content/goodList/GoodList"
+    import Scroll from "@/components/common/scroll/Scroll";
 
     import HomeSwiper from "./childComps/HomeSwiper";
     import RecommendView from "./childComps/RecommendView";
@@ -32,7 +39,8 @@
             RecommendView,
             FeatureView,
             TabControl,
-            GoodList
+            GoodList,
+            Scroll
 
         },
         data(){
@@ -110,12 +118,19 @@
 
 <style scoped>
     #home{
-        padding-top: 50px;
-        padding-bottom: 50px;
+        /*padding-top: 50px;*/
+        /*padding-bottom: 50px;*/
+        /*视口高度*/
+        height: 100vh;
     }
     .tabcontrol{
         position: sticky;
         top: 44px;
+    }
+    .content{
+        margin-top: 44px;
+        height: calc(100% - 93px);
+        overflow: hidden;
     }
 
 
