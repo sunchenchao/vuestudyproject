@@ -20,19 +20,36 @@
                 scroll:null
             }
         },
+        props:{
+            numtype:{
+                type:Number,
+                default:0,
+            }
+        },
         mounted() {
+
            this.scroll = new Bscroll(this.$refs.wrapper,{
-                probeType:3,
+                probeType:this.numtype,
                 pullUpLoad:true,
-               observeDOM:true
+               observeDOM:true,
+               click:true
             });
             //监听滚动时间
            this.scroll.on("scroll",(postion)=>{
-                console.log(postion);
+                   this.$emit("ShowAndDie",postion);
             });
             this.scroll.on("pullingUp",()=>{
+                this.$emit("UpMore");
                 console.log("上拉加载更多");
             })
+        },
+        methods:{
+            GoToTop(x,y,time=300){
+                this.scroll.scrollTo(x,y,time);
+            },
+            Finish(){
+                this.scroll.finishPullUp();
+            }
         }
     }
 </script>

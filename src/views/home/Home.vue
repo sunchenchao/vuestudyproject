@@ -3,13 +3,16 @@
         <NavBar>
             <div slot="center">首页</div>
         </NavBar>
-        <scroll class="content">
+
+        <scroll ref="scroll" class="content" :numtype="3" @ShowAndDie="ShowAndDie" @UpMore="UpMore">
             <HomeSwiper :banner="banner"></HomeSwiper>
             <recommend-view :recommends="recommends"></recommend-view>
             <feature-view></feature-view>
             <tab-control class="tabcontrol" :titles="['推荐','喜欢','热门']" @tabCheck="tabCheck"></tab-control>
             <good-list :goodList="getCurrentyTpye"></good-list>
+
         </scroll>
+        <back-top v-show="controlTopIsShow" class="backtop" @click.native="GoToTop()"></back-top>
 
 
 
@@ -22,6 +25,7 @@
     import TabControl from "@/components/content/tabControl/TabControl";
     import GoodList from "@/components/content/goodList/GoodList"
     import Scroll from "@/components/common/scroll/Scroll";
+    import BackTop from "@/components/content/backtop/BackTop";
 
     import HomeSwiper from "./childComps/HomeSwiper";
     import RecommendView from "./childComps/RecommendView";
@@ -40,7 +44,8 @@
             FeatureView,
             TabControl,
             GoodList,
-            Scroll
+            Scroll,
+            BackTop
 
         },
         data(){
@@ -48,6 +53,7 @@
                 currentName:"pop",
                 banner: {},
                 recommends: [],
+                controlTopIsShow:false,
                 goods:{
                     'pop':{
                         page:0,
@@ -89,6 +95,25 @@
                 }
 
             },
+            GoToTop(){
+                this.$refs.scroll.GoToTop(0,0,300);
+
+            },
+            ShowAndDie(postion) {
+                console.log(postion);
+                if (postion.y<-1000){
+                    this.controlTopIsShow = true;
+                }else {
+                    this.controlTopIsShow =false;
+                }
+            },
+            UpMore(){
+                this.getHomeGoods(this.currentName);
+                this.$refs.scroll.Finish();
+                //应为不知道真实的高度所有在加载完成之后就是需要使用refresh
+                this.$refs.scroll.scroll.refresh();
+
+            },
 
             /**
              * 这个时网路请求相关方法
@@ -128,10 +153,16 @@
         top: 44px;
     }
     .content{
-        margin-top: 44px;
+        /*margin-top: 44px;*/
         height: calc(100% - 93px);
-        overflow: hidden;
+        /*overflow: hidden;*/
+        position: absolute;
+        top: 44px;
+        left: 0px;
+
+
     }
+
 
 
 </style>
