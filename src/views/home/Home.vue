@@ -1,14 +1,14 @@
 <template>
     <div id="home">
-        <NavBar>
+        <NavBar style="height: 44px">
             <div slot="center">首页</div>
         </NavBar>
 
         <scroll ref="scroll" class="content" :numtype="3" @ShowAndDie="ShowAndDie" @UpMore="UpMore">
-            <HomeSwiper :banner="banner"></HomeSwiper>
+            <HomeSwiper @imageover="ImageOver()"  :banner="banner"></HomeSwiper>
             <recommend-view :recommends="recommends"></recommend-view>
             <feature-view></feature-view>
-            <tab-control class="tabcontrol" :titles="['推荐','喜欢','热门']" @tabCheck="tabCheck"></tab-control>
+            <tab-control ref="tabcontrol" class="tabcontrol" :titles="['推荐','喜欢','热门']" @tabCheck="tabCheck"></tab-control>
             <good-list :goodList="getCurrentyTpye"></good-list>
 
         </scroll>
@@ -114,6 +114,10 @@
                 this.$refs.scroll.scroll.refresh();
 
             },
+            ImageOver(){
+                console.log(this.$refs.tabcontrol.$el.offsetTop);
+
+            },
 
             /**
              * 这个时网路请求相关方法
@@ -136,6 +140,8 @@
             getCurrentyTpye(){
                 return this.goods[this.currentName].list;
             }
+        },
+        mounted() {
         }
 
     }

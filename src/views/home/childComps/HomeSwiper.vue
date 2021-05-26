@@ -2,7 +2,7 @@
     <swiper>
         <swiper-item v-for="(item,index) in banner.list" :key="item.id">
             <a :herf="item.link">
-                <img :src="item.image">
+                <img :src="item.image" @load="ImageOver">
             </a>
         </swiper-item>
     </swiper>
@@ -21,10 +21,23 @@
               }
           }
         },
+        data(){
+            return{
+                isload:true,
+            }
+        },
         components:{
             Swiper,
             SwiperItem
 
+        },
+        methods:{
+            ImageOver(){
+                if (this.isload){
+                    this.$emit("imageover");
+                    this.isload = !this.isload;
+                }
+            }
         }
     }
 </script>
