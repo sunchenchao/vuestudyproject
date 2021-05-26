@@ -3,7 +3,7 @@
         <NavBar style="height: 44px">
             <div slot="center">首页</div>
         </NavBar>
-
+            <tab-control ref="tabcontrolcopy" v-show="controllIsShow" class="tabcontrolcopy" :titles="['推荐','喜欢','热门']" @tabCheck="tabCheck"></tab-control>
         <scroll ref="scroll" class="content" :numtype="3" @ShowAndDie="ShowAndDie" @UpMore="UpMore">
             <HomeSwiper @imageover="ImageOver()"  :banner="banner"></HomeSwiper>
             <recommend-view :recommends="recommends"></recommend-view>
@@ -67,7 +67,8 @@
                         page:0,
                         list:[]
                     }
-                }
+                },
+                controllIsShow:false
             }
         },
         created() {
@@ -93,6 +94,8 @@
                         this.currentName = "new";
                         break;
                 }
+                this.$refs.tabcontrol.currentIndex = index;
+                this.$refs.tabcontrolcopy.currentIndex = index;
 
             },
             GoToTop(){
@@ -106,6 +109,11 @@
                 }else {
                     this.controlTopIsShow =false;
                 }
+                if(postion.y<-590){
+                    this.controllIsShow = true;
+                }else{
+                    this.controllIsShow = false;
+                }
             },
             UpMore(){
                 this.getHomeGoods(this.currentName);
@@ -116,7 +124,6 @@
             },
             ImageOver(){
                 console.log(this.$refs.tabcontrol.$el.offsetTop);
-
             },
 
             /**
@@ -167,6 +174,10 @@
         left: 0px;
 
 
+    }
+    .tabcontrolcopy{
+        position: relative;
+        z-index: 12;
     }
 
 

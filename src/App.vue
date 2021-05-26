@@ -14,11 +14,15 @@ export default {
   components: {
     MainTabBar
 
+  },
+  methods:{
+  
   }
 }
 </script>
 
 <style>
   @import "assets/css/base.css";
+  
 
 </style>
