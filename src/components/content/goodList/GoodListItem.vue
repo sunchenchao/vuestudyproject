@@ -1,5 +1,5 @@
 <template>
-    <div class="gooditem">
+    <div class="gooditem" @click="detail">
         <img :src="gooditem.show.img">
         <div class="title">
            {{gooditem.title}}
@@ -19,6 +19,11 @@
                 default(){
                     return {};
                 }
+            }
+        },
+        methods:{
+            detail(){
+                this.$router.push("/detail/"+this.gooditem.iid)
             }
         }
     }
