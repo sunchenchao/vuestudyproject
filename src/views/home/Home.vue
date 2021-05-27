@@ -68,7 +68,8 @@
                         list:[]
                     }
                 },
-                controllIsShow:false
+                controllIsShow:false,
+                saveY:0,
             }
         },
         created() {
@@ -149,6 +150,18 @@
             }
         },
         mounted() {
+        },
+        //销毁函数
+        destroyed(){
+            console.log("销毁");
+            
+        },
+        activated(){
+            this.$refs.scroll.GoToTop(0,this.saveY,0);
+            
+        },
+        deactivated(){
+            this.saveY =this.$refs.scroll.scroll.y;
         }
 
     }
