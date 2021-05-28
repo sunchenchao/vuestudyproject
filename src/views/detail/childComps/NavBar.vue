@@ -1,6 +1,6 @@
 <template>
         <nav-barr>
-           <div slot="left">
+           <div @click="back()" slot="left">
             <img class="left-img" src="@/assets/img/common/back.svg">
         </div>
          <div class="center" slot="center">
@@ -29,6 +29,9 @@ export default {
          NowItem(index){
             this.currentIndex = index;
         },
+        back(){
+            this.$router.back();
+        }
         
     }
     

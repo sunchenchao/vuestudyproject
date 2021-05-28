@@ -2,7 +2,7 @@
   <div id="detail">
     <nav-bar></nav-bar>
     <scroll class="scroll" ref="scroll" @imageDetail="imgFrash">
-      <detial-swiper :swiperImg="swiperImg"></detial-swiper>
+      <detial-swiper  :swiperImg="swiperImg"></detial-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop"></detail-shop-info>
       <detail-goods-info :detailInfo="detailInfo"></detail-goods-info>
