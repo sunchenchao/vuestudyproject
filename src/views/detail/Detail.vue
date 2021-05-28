@@ -8,41 +8,62 @@
              <div :class="{active:index == currentIndex}" @click="NowItem(index)" class="nav-item" v-for="(item,index) in title" :key="index">{{item}}</div>
          </div>
          <div slot="right"></div>
-
-
     </nav-bar>
+    <swiper class="swiperbox">
+        <swiper-item v-for="(item,index) in swiperImg" :key="index">
+            {{item}}
+            <img :src="item">
+
+        </swiper-item>
+    </swiper>
     
-    {{goodiid}}
+   
 
 </div>
     
 </template>
 <script>
 import NavBar from "@/components/common/navbar/NavBar";
+import {getGoodDetail } from "@/network/detail.js" 
+
+import {Swiper, SwiperItem} from "@/components/common/swiper"
+
 export default {
     name:"Detail",
     components:{
-        NavBar
-
+        NavBar,
+        Swiper,
+        SwiperItem
     },
     data(){
         return{
             goodiid:null,
             title:["商品","参数","评论","推荐"],
-            currentIndex:0
+            currentIndex:0,
+            swiperImg:[],
         }
     },
     created(){
         console.log(this.$route.params)
         this.goodiid = this.$route.params.iid;
+        this.getGoodDetail();
     },
     computed:{
 
     },
     methods:{
         NowItem(index){
-         
             this.currentIndex = index;
+        },
+
+        /**
+         * 网络相关的请求方法
+         */
+        getGoodDetail(){
+            getGoodDetail(this.goodiid).then((res)=>{
+                console.log();
+                this.swiperImg = res.data.result.itemInfo.topImages;
+            })
 
         }
         
@@ -64,6 +85,9 @@ export default {
 }
 .active{
     color: pink;
+}
+.swiperbox{
+    height: 400px;
 }
 
 </style>
