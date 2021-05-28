@@ -1,68 +1,61 @@
 <template>
 <div id="detail">
-    <nav-bar>
-        <div slot="left">
-            <img class="left-img" src="@/assets/img/common/back.svg">
-        </div>
-         <div class="center" slot="center">
-             <div :class="{active:index == currentIndex}" @click="NowItem(index)" class="nav-item" v-for="(item,index) in title" :key="index">{{item}}</div>
-         </div>
-         <div slot="right"></div>
-    </nav-bar>
-    <swiper class="swiperbox">
-        <swiper-item v-for="(item,index) in swiperImg" :key="index">
-            {{item}}
-            <img :src="item">
-
-        </swiper-item>
-    </swiper>
-    
-   
+    <nav-bar></nav-bar>
+    <detial-swiper :swiperImg="swiperImg"></detial-swiper>
+    <detail-base-info :goods="goods" ></detail-base-info>
+    <detail-shop-info :shop="shop"></detail-shop-info>
 
 </div>
     
 </template>
 <script>
-import NavBar from "@/components/common/navbar/NavBar";
-import {getGoodDetail } from "@/network/detail.js" 
+import NavBar from "@/views/detail/childComps/NavBar.vue"
 
-import {Swiper, SwiperItem} from "@/components/common/swiper"
+import {getGoodDetail,Goods,Shop} from "@/network/detail.js" 
+import DetialSwiper from '@/views/detail/childComps/DetialSwiper.vue'
+import DetailBaseInfo from '@/views/detail/childComps/DetailBaseInfo.vue'
+import DetailShopInfo from '@/views/detail/childComps/DetailShopInfo.vue'
 
 export default {
     name:"Detail",
     components:{
         NavBar,
-        Swiper,
-        SwiperItem
+        DetialSwiper,
+        DetailBaseInfo,
+        DetailShopInfo,
+
     },
     data(){
-        return{
+   
+            return{
             goodiid:null,
-            title:["商品","参数","评论","推荐"],
-            currentIndex:0,
             swiperImg:[],
+            goods:{},
+            shop:{},
         }
     },
     created(){
         console.log(this.$route.params)
         this.goodiid = this.$route.params.iid;
         this.getGoodDetail();
+        
+       
     },
     computed:{
 
     },
     methods:{
-        NowItem(index){
-            this.currentIndex = index;
-        },
+       
 
         /**
          * 网络相关的请求方法
          */
         getGoodDetail(){
             getGoodDetail(this.goodiid).then((res)=>{
-                console.log();
+                console.log(res);
                 this.swiperImg = res.data.result.itemInfo.topImages;
+                 this.goods = new Goods(res.data.result.itemInfo,res.data.result.columns,res.data.result.shopInfo.services);
+                 this.shop = new Shop(res.data.result.shopInfo)
             })
 
         }
@@ -73,19 +66,6 @@ export default {
 </script>
 
 <style scoped>
-.left-img{
-    margin-top: 10px;
-    margin-left: 20px;
-}
-.center{
-    display: flex;
-}
-.nav-item{
-    flex: 1;
-}
-.active{
-    color: pink;
-}
 .swiperbox{
     height: 400px;
 }
