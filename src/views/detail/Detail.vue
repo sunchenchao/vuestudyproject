@@ -10,13 +10,14 @@
       <detail-param-info :paramInfo="paramInfo"></detail-param-info>
       
       <detail-commend-info :commendInfo="commendInfo"></detail-commend-info>
+        <good-list :goodList="recommend"></good-list>
     </scroll>
   </div>
 </template>
 <script>
 import NavBar from "@/views/detail/childComps/NavBar.vue";
 
-import { getGoodDetail, Goods, Shop, GoodsParam } from "@/network/detail.js";
+import { getGoodDetail, Goods, Shop, GoodsParam,getRecommend } from "@/network/detail.js";
 import DetialSwiper from "@/views/detail/childComps/DetialSwiper.vue";
 import DetailBaseInfo from "@/views/detail/childComps/DetailBaseInfo.vue";
 import DetailShopInfo from "@/views/detail/childComps/DetailShopInfo.vue";
@@ -24,6 +25,7 @@ import Scroll from "@/components/common/scroll/Scroll.vue";
 import DetailGoodsInfo from "@/views/detail/childComps/DetailGoodsInfo.vue";
 import DetailParamInfo from "@/views/detail/childComps/DetailParamInfo.vue";
 import DetailCommendInfo from "@/views/detail/childComps/DetailCommendInfo.vue";
+import GoodList from "@/components/content/goodList/GoodList";
 
 export default {
   name: "Detail",
@@ -36,6 +38,7 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommendInfo,
+      GoodList
   },
   data() {
     return {
@@ -46,12 +49,14 @@ export default {
       detailInfo: {},
       paramInfo: {},
       commendInfo:{},
+      recommend:[],
     };
   },
   created() {
     console.log(this.$route.params);
     this.goodiid = this.$route.params.iid;
     this.getGoodDetail();
+    this.getRecommend();
   },
   computed: {},
   methods: {
@@ -77,6 +82,12 @@ export default {
           this.commendInfo = res.data.result.rate.list[0];
         }
       });
+    },
+    getRecommend(){
+      getRecommend().then((res)=>{
+         this.recommend = res.data.data.list;
+        console.log(this.recommend);
+      })
     },
     imgFrash() {
       this.$refs.scroll.scroll.refresh();

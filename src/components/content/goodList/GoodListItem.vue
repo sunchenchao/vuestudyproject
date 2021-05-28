@@ -1,6 +1,6 @@
 <template>
     <div class="gooditem" @click="detail">
-        <img :src="gooditem.show.img">
+        <img :src="getImgUrl">
         <div class="title">
            {{gooditem.title}}
         </div>
@@ -24,6 +24,13 @@
         methods:{
             detail(){
                 this.$router.push("/detail/"+this.gooditem.iid)
+            }
+        },
+        computed:{
+            getImgUrl(){
+                //这里换个位置就是会发生错误：前端有可能又数据 但是又是 不应该
+                //prop传过来的数据就是被替换了 为什么会发生这种事情
+                return this.gooditem.image || this.gooditem.show.img;
             }
         }
     }

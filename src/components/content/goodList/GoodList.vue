@@ -21,6 +21,9 @@
         },
         components:{
             GoodListItem
+        },
+        computed:{
+
         }
     }
 </script>
