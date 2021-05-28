@@ -58,7 +58,6 @@
     .wrapper{
         overflow: hidden;
     }
-    .content{
-    }
+
 
 </style>
