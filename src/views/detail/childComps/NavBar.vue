@@ -26,12 +26,15 @@ export default {
         }
     },
     methods:{
+        //这个就是监听的那个item的点击函数
          NowItem(index){
             this.currentIndex = index;
+            this.$emit("NowItem",index);
         },
         back(){
             this.$router.back();
-        }
+        },
+
         
     }
     
