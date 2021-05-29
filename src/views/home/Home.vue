@@ -25,7 +25,7 @@
     import TabControl from "@/components/content/tabControl/TabControl";
     import GoodList from "@/components/content/goodList/GoodList"
     import Scroll from "@/components/common/scroll/Scroll";
-    import BackTop from "@/components/content/backtop/BackTop";
+    
 
     import HomeSwiper from "./childComps/HomeSwiper";
     import RecommendView from "./childComps/RecommendView";
@@ -34,9 +34,12 @@
 
     import {getHomeMultidata,getHomeGoods} from "@/network/home";
 
+    import {backTopMinxin} from "@/common/mixin"
+
 
     export default {
         name: "Home",
+        mixins:[backTopMinxin],
         components:{
             NavBar,
             HomeSwiper,
@@ -45,7 +48,7 @@
             TabControl,
             GoodList,
             Scroll,
-            BackTop
+          
 
         },
         data(){
@@ -53,7 +56,7 @@
                 currentName:"pop",
                 banner: {},
                 recommends: [],
-                controlTopIsShow:false,
+         
                 goods:{
                     'pop':{
                         page:0,
@@ -99,10 +102,7 @@
                 this.$refs.tabcontrolcopy.currentIndex = index;
 
             },
-            GoToTop(){
-                this.$refs.scroll.GoToTop(0,0,300);
 
-            },
             ShowAndDie(postion) {
                 console.log(postion);
                 if (postion.y<-1000){
