@@ -1,7 +1,16 @@
 <template>
-    <div class="wrapper">
-        <h1>防抖函数的使用</h1>
-        <input v-model="fangdou">
+    <div id="cart">
+        <nav-bar>
+            <div slot="center">
+                购物车({{cartLength}})
+            </div>
+        </nav-bar>
+        <scroll>
+
+
+        </scroll>
+
+
 
     </div>
 
@@ -9,8 +18,13 @@
 </template>
 
 <script>
+    import Scroll from "@/components/common/scroll/Scroll.vue";
+    import NavBar from "@/components/common/navbar/NavBar.vue";
+    //这个就是可以将getter方法结构然后导出
+    import {mapGetters}  from "vuex"
     export default {
         name: "Cart",
+        components: {NavBar, Scroll},
         data(){
             return{
                 fangdou:"come",
@@ -46,6 +60,9 @@
                 },1000);
 
             }
+        },
+        computed:{
+            ...mapGetters(["cartLength"]),
         }
     }
 </script>
