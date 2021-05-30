@@ -5,9 +5,11 @@
                 购物车({{cartLength}})
             </div>
         </nav-bar>
-        <scroll>
-
-
+        <scroll class="content">
+            <cart-list>
+                <cart-list-item v-for="(item,index) in cartList" :good="item" :key="item.iid">
+                </cart-list-item>
+            </cart-list>
         </scroll>
 
 
@@ -20,11 +22,19 @@
 <script>
     import Scroll from "@/components/common/scroll/Scroll.vue";
     import NavBar from "@/components/common/navbar/NavBar.vue";
+    import CartListItem from "@/views/cart/childComps/CartListItem.vue";
+
     //这个就是可以将getter方法结构然后导出
     import {mapGetters}  from "vuex"
+    import CartList from "./childComps/CartList";
     export default {
         name: "Cart",
-        components: {NavBar, Scroll},
+        components: {
+            CartList,
+            CartListItem,
+            NavBar,
+            Scroll,
+        },
         data(){
             return{
                 fangdou:"come",
@@ -62,15 +72,19 @@
             }
         },
         computed:{
-            ...mapGetters(["cartLength"]),
+            ...mapGetters(["cartLength","cartList"]),
         }
     }
 </script>
 
 <style scoped>
-    .wrapper{
-        width: 100%;
-        height: 500px;
-    }
+#cart{
+    height: 100vh;
+}
+.content{
+    margin-top: 49px;
+    height: calc(100% - 44px - 49px);
+    overflow: hidden;
+}
 
 </style>
