@@ -27,7 +27,7 @@
       <good-list ref="goodlistinfo" :goodList="recommend"></good-list>
     </scroll>
     <back-top @click.native="GoToTop()" v-show="controlTopIsShow"></back-top>
-    <detail-bottom-bar></detail-bottom-bar>
+    <detail-bottom-bar @addShopCar="addShopCar"></detail-bottom-bar>
   </div>
 </template>
 <script>
@@ -167,6 +167,17 @@ export default {
         this.controlTopIsShow = false;
       }
     },
+    //监听添加购物车事件
+    addShopCar(context,plaload){
+      const product = {};
+      product.image =  this.swiperImg[0];
+      product.title = this.goods.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.realPrics;
+      product.iid = this.goodiid;
+      this.$store.dispatch("addShopCar",product);
+
+    }
     
   },
 };
