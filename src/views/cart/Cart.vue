@@ -5,12 +5,15 @@
                 购物车({{cartLength}})
             </div>
         </nav-bar>
-        <scroll class="content">
+        <scroll ref="scroll" class="content">
             <cart-list>
-                <cart-list-item v-for="(item,index) in cartList" :good="item" :key="item.iid">
+                <cart-list-item v-for="(item,index) in cartList" :listItem="item" :key="item.iid">
                 </cart-list-item>
             </cart-list>
         </scroll>
+        <cart-button-bar class="bottom-bar">
+
+        </cart-button-bar>
 
 
 
@@ -27,9 +30,11 @@
     //这个就是可以将getter方法结构然后导出
     import {mapGetters}  from "vuex"
     import CartList from "./childComps/CartList";
+    import CartButtonBar from  "@/views/cart/childComps/CartButtonBar.vue"
     export default {
         name: "Cart",
         components: {
+            CartButtonBar,
             CartList,
             CartListItem,
             NavBar,
@@ -73,6 +78,9 @@
         },
         computed:{
             ...mapGetters(["cartLength","cartList"]),
+        },
+        activated() {
+            this.$refs.scroll.scroll.refresh()
         }
     }
 </script>
@@ -83,8 +91,13 @@
 }
 .content{
     margin-top: 49px;
-    height: calc(100% - 44px - 49px);
+    height: calc(100% - 44px - 49px - 40px);
     overflow: hidden;
 }
+    .bottom-bar{
+        position: fixed;
+        bottom: 49px;
+
+    }
 
 </style>

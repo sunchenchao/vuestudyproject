@@ -51,7 +51,8 @@ import GoodList from "@/components/content/goodList/GoodList";
 import DetailBottomBar from "./childComps/DetailBottomBar.vue";
 
 import {backTopMinxin} from "@/common/mixin"
-
+import {mapActions} from "vuex";
+//这就是可以再methods中使用
 
 
 export default {
@@ -91,6 +92,7 @@ export default {
   },
   computed: {},
   methods: {
+    // ...mapActions([])这边也是用数组的方式 可以使用vuex中的方法
     /**
      * 网络相关的请求方法
      */
@@ -173,9 +175,13 @@ export default {
       product.image =  this.swiperImg[0];
       product.title = this.goods.title;
       product.desc = this.goods.desc;
-      product.price = this.goods.realPrics;
+      product.price = this.goods.realPrice;
       product.iid = this.goodiid;
-      this.$store.dispatch("addShopCar",product);
+      product.checked = true;
+      this.$store.dispatch("addShopCar",product).then(res=>{
+        this.$toast.isShow(res,2000)
+        console.log(res);
+      })
 
     }
     

@@ -14,8 +14,10 @@
         props:{
 
         },
-        data:{
+        data(){
+            return {
 
+            }
         }
 
     }
